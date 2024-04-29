@@ -39,43 +39,62 @@ const transactionCreateController = async (req, res, next) => {
       transaction,
     });
   } catch (error) {
-    console.log(error.message);
+    return next(error.message);
   }
 };
 const transactionGetController = async (req, res, next) => {
   try {
+    const trans = await Transaction.find();
+
     res.json({
-      message: "transactions Get",
+      message: "transactions Get All",
+      status: "success",
+      data: trans,
     });
   } catch (error) {
-    console.log(error.message);
+    return next(error.message);
   }
 };
 const transactiongetByIdController = async (req, res, next) => {
   try {
+    const { id } = req.params;
+    const trans = await Transaction.findById(id);
     res.json({
+      status: "success",
       message: "transactions getById",
+      data: trans,
     });
   } catch (error) {
-    console.log(error.message);
+    return next(error.message);
   }
 };
 const transactionDeleteController = async (req, res, next) => {
   try {
+    const { id } = req.params;
+    await Transaction.findByIdAndDelete(id);
     res.json({
       message: "transactions Delete",
+      status: "success",
+      data: "null",
     });
   } catch (error) {
-    console.log(error.message);
+    return next(error.message);
   }
 };
 const transactionUpdateController = async (req, res, next) => {
   try {
+    const { id } = req.params;
+    const trans = await Transaction.findByIdAndUpdate(id, req.body, {
+      new: true,
+      runValidators: true,
+    });
     res.json({
       message: "transactions Update",
+      status: "success",
+      data: trans,
     });
   } catch (error) {
-    console.log(error.message);
+    return next(error.message);
   }
 };
 
