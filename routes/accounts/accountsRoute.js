@@ -5,12 +5,13 @@ const {
   accountUpdateController,
   accountDeleteController,
 } = require("../../controllers/accounts/accountController");
+const isLogin = require("../../middleware/isLogin");
 
 const accountRoute = express.Router();
 
-accountRoute.post("/", accountCreateController);
+accountRoute.post("/", isLogin, accountCreateController);
 
-accountRoute.get("/:id", accountGetController);
+accountRoute.get("/", accountGetController);
 
 accountRoute.delete("/:id", accountDeleteController);
 

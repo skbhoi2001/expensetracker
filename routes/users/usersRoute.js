@@ -16,8 +16,8 @@ usersRoute.post("/login", userLoginController);
 
 usersRoute.get("/profile", isLogin, userProfileController);
 
-usersRoute.delete("/:id", userDeleteController);
+usersRoute.delete("/", isLogin, userDeleteController);
 
-usersRoute.put("/:id", userUpdateController);
+usersRoute.put("/", isLogin, userUpdateController);
 
 module.exports = usersRoute;

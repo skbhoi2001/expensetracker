@@ -6,7 +6,7 @@ const accountSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    account: {
+    accountType: {
       type: String,
       enum: ["Saving", "Investment", "Checking", "Credit Card"],
       required: true,
@@ -19,7 +19,7 @@ const accountSchema = new mongoose.Schema(
     transactions: [
       {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "Trasaction",
+        ref: "Transaction",
       },
     ],
     createdBy: {
