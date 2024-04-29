@@ -45,10 +45,30 @@ const accountGetController = async (req, res, next) => {
     return next(error.message);
   }
 };
+const accountSingleGetController = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const account = await Account.findById(id).populate("transactions");
+    res.json({
+      message: "Account Get Specefic",
+      status: "success",
+      account,
+    });
+  } catch (error) {
+    return next(error.message);
+  }
+};
 const accountUpdateController = async (req, res, next) => {
   try {
+    const { id } = req.params;
+    const account = await Account.findByIdAndUpdate(id, req.body, {
+      new: true,
+      runValidators: true,
+    });
     res.json({
       message: "Account Update",
+      status: "success",
+      account,
     });
   } catch (error) {
     return next(error.message);
@@ -56,8 +76,12 @@ const accountUpdateController = async (req, res, next) => {
 };
 const accountDeleteController = async (req, res, next) => {
   try {
+    const { id } = req.params;
+    await Account.findByIdAndDelete(id);
     res.json({
       message: "Account Delete",
+      data: null,
+      status: "Success",
     });
   } catch (error) {
     return next(error.message);
@@ -69,4 +93,5 @@ module.exports = {
   accountGetController,
   accountUpdateController,
   accountDeleteController,
+  accountSingleGetController,
 };
