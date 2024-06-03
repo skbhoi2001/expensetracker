@@ -34,6 +34,24 @@ const accountCreateController = async (req, res, next) => {
     return next(error.message);
   }
 };
+const accountGetSpeceficUser = async (req, res, next) => {
+  const userFound = await User.findById(req.user);
+  if (!userFound) return next(new AppErr("User not found", 404));
+
+  const accountGetAll = await Account.find({}).populate("transactions");
+  const account = accountGetAll.filter(
+    (ele) => ele.createdBy.toString() === userFound._id.toString()
+  );
+  try {
+    res.json({
+      message: "Account Get",
+      status: "success",
+      account,
+    });
+  } catch (error) {
+    return next(error.message);
+  }
+};
 const accountGetController = async (req, res, next) => {
   const account = await Account.find({}).populate("transactions");
   try {
@@ -94,4 +112,5 @@ module.exports = {
   accountUpdateController,
   accountDeleteController,
   accountSingleGetController,
+  accountGetSpeceficUser,
 };

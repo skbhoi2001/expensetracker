@@ -5,12 +5,15 @@ const {
   accountUpdateController,
   accountDeleteController,
   accountSingleGetController,
+  accountGetSpeceficUser,
 } = require("../../controllers/accounts/accountController");
 const isLogin = require("../../middleware/isLogin");
 
 const accountRoute = express.Router();
 
 accountRoute.post("/", isLogin, accountCreateController);
+
+accountRoute.get("/", isLogin, accountGetSpeceficUser);
 
 accountRoute.get("/", accountGetController);
 
