@@ -5,8 +5,16 @@ const usersRoute = require("./routes/users/usersRoute");
 const accountRoute = require("./routes/accounts/accountsRoute");
 const trasactionRoute = require("./routes/transaction/transactionRoute");
 const globalErrHandler = require("./middleware/globalErrorHandler");
+const cors = require("cors");
 
 const app = express();
+app.use(cors());
+
+app.use(
+  cors({
+    origin: "*", // Allow requests from any origin
+  })
+);
 
 //!middleware
 app.use(express.json());
